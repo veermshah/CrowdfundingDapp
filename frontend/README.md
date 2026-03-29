@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ChainFund Frontend
+
+Frontend for a decentralized crowdfunding app built with Next.js + React + Tailwind CSS.
+
+The UI focuses on a transparent Web3 fundraising flow where campaign creation, contribution, and milestone fund release are intended to be enforced by Solidity smart contracts from the Hardhat workspace.
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- ESLint 9
+
+## Project Structure
+
+```
+app/
+	globals.css                # global styles, motion helpers, visual theme
+	layout.tsx                 # metadata + root layout
+	page.tsx                   # homepage composition
+components/
+	layout/
+		Navbar.tsx
+		Footer.tsx
+	sections/
+		HeroSection.tsx
+		StatsStrip.tsx
+		CampaignGrid.tsx
+		HowItWorks.tsx
+		TransparencyLedger.tsx
+		LiveActivity.tsx
+		FinalCta.tsx
+	ui/
+		Pill.tsx
+data/
+	campaigns.ts               # temporary mock data for campaigns + live activity
+types/
+	campaign.ts                # shared campaign-related TypeScript types
+```
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start local development:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Available Scripts
 
-## Learn More
+- npm run dev: Start development server
+- npm run build: Create production build
+- npm run start: Start production server from built output
+- npm run lint: Run ESLint checks
 
-To learn more about Next.js, take a look at the following resources:
+## Current Status
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- The UI and layout system are implemented and responsive.
+- Most action buttons are currently presentational.
+- Data currently comes from local mock data in data/campaigns.ts.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Next Implementation Steps
 
-## Deploy on Vercel
+1. Build Solidity crowdfunding contracts in ../hardhat and finalize events + storage layout.
+2. Deploy contracts to local/dev network and export ABI + deployed address.
+3. Add wallet integration in frontend (MetaMask connect/disconnect, chain checks).
+4. Replace mock campaign data with on-chain reads.
+5. Wire contribution and campaign creation actions to contract writes.
+6. Add transaction UX states (pending, success, error) and explorer links.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment Variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Use an env file for frontend runtime configuration:
+
+- .env.example (committed template)
