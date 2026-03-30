@@ -1,6 +1,39 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import { Pill } from "../ui/Pill";
 
+type UserRole = "creator" | "supporter";
+
 export function FinalCta() {
+  const [role, setRole] = useState<UserRole>("creator");
+
+  const roleContent = useMemo(
+    () =>
+      role === "creator"
+        ? {
+            label: "Creator flow",
+            heading: "Prepare milestones and deploy your transparent campaign.",
+            actions: [
+              "Create Campaign",
+              "Draft Milestone Rules",
+              "Read Documentation",
+              "View Deployed Contracts",
+            ],
+          }
+        : {
+            label: "Contributor flow",
+            heading: "Connect your wallet and back campaigns with full auditability.",
+            actions: [
+              "Connect MetaMask",
+              "Explore Campaigns",
+              "Track Wallet Activity",
+              "Review Contract Rules",
+            ],
+          },
+    [role],
+  );
+
   return (
     <section className="glass-panel rounded-3xl p-8 sm:p-10">
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -18,22 +51,50 @@ export function FinalCta() {
         </div>
 
         <div className="rounded-3xl border border-white/15 bg-slate-950/50 p-6">
-          <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-            Get Started
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setRole("creator")}
+              className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                role === "creator"
+                  ? "border-cyan-300/45 bg-cyan-300/15 text-cyan-100"
+                  : "border-white/20 text-slate-200 hover:border-white/35"
+              }`}
+            >
+              Creator
+            </button>
+            <button
+              type="button"
+              onClick={() => setRole("supporter")}
+              className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                role === "supporter"
+                  ? "border-cyan-300/45 bg-cyan-300/15 text-cyan-100"
+                  : "border-white/20 text-slate-200 hover:border-white/35"
+              }`}
+            >
+              Contributor
+            </button>
+          </div>
+
+          <p className="mt-4 text-xs uppercase tracking-[0.18em] text-slate-400">
+            {roleContent.label}
           </p>
+          <p className="mt-2 text-sm text-slate-200">{roleContent.heading}</p>
+
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <button className="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200">
-              Create Campaign
-            </button>
-            <button className="rounded-xl border border-white/25 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/50">
-              Connect MetaMask
-            </button>
-            <button className="rounded-xl border border-white/25 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/50">
-              Read Documentation
-            </button>
-            <button className="rounded-xl border border-white/25 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/50">
-              View Deployed Contracts
-            </button>
+            {roleContent.actions.map((action, index) => (
+              <button
+                key={action}
+                type="button"
+                className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                  index === 0
+                    ? "bg-white text-slate-950 hover:bg-slate-200"
+                    : "border border-white/25 text-slate-100 hover:border-white/50"
+                }`}
+              >
+                {action}
+              </button>
+            ))}
           </div>
         </div>
       </div>

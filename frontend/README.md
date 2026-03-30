@@ -68,8 +68,10 @@ http://localhost:3000
 
 ## Current Status
 
-- The UI and layout system are implemented and responsive.
-- Most action buttons are currently presentational.
+- The UI is responsive and includes interactive sections.
+- Campaign discovery supports search, category filters, verified toggle, and sorting.
+- Live activity includes pause/resume, sorting, and amount filtering controls.
+- Accessibility polish includes stronger focus states and reduced-motion support.
 - Data currently comes from local mock data in data/campaigns.ts.
 
 ## Next Implementation Steps

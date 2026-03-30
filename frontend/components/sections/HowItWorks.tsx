@@ -37,7 +37,7 @@ export function HowItWorks() {
         {steps.map((step, index) => (
           <article
             key={step.title}
-            className="glass-panel animate-reveal flex h-full flex-col rounded-2xl p-6"
+            className="glass-panel animate-reveal flex h-full flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-200/35 hover:shadow-[0_16px_40px_-24px_rgba(34,211,238,0.5)]"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <h3 className="text-xl font-semibold text-white">

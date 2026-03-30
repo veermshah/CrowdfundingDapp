@@ -21,12 +21,18 @@ export function HeroSection() {
           time.
         </p>
         <div className="flex flex-wrap gap-4">
-          <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200">
+          <a
+            href="#campaigns"
+            className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
+          >
             Explore Campaigns
-          </button>
-          <button className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/60 hover:bg-white/10">
+          </a>
+          <a
+            href="#how-it-works"
+            className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/60 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
+          >
             Start Your Campaign
-          </button>
+          </a>
         </div>
         <ul className="grid gap-3 pt-2 text-sm text-slate-300 sm:grid-cols-3 sm:gap-4">
           {trustSignals.map((signal) => (
@@ -37,7 +43,7 @@ export function HeroSection() {
         </ul>
       </div>
 
-      <div className="animate-drift glass-panel relative overflow-hidden rounded-3xl p-7 sm:p-8">
+      <div className="animate-drift glass-panel relative overflow-hidden rounded-3xl p-7 transition duration-300 hover:scale-[1.01] hover:shadow-[0_16px_40px_-24px_rgba(125,211,252,0.55)] sm:p-8">
         <div className="absolute -right-10 -top-12 h-40 w-40 rounded-full bg-cyan-300/20 blur-3xl" />
         <div className="absolute -bottom-10 -left-8 h-44 w-44 rounded-full bg-amber-300/25 blur-3xl" />
 
