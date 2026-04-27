@@ -3,13 +3,10 @@
 import Link from 'next/link'
 import { useReadContract, useReadContracts } from 'wagmi'
 import { CROWDFUNDING_ABI, CROWDFUNDING_ADDRESS } from '@/lib/contract'
-import { fmtEth } from '@/lib/format'
 import { useEthPrice } from '@/lib/useEthPrice'
 import { EthAmount } from '@/components/ui/EthAmount'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
-
-const CATEGORIES = ['All', 'Environment', 'Health', 'Education', 'Technology', 'Community', 'Other']
 
 function ProgressBar({ raised, goal }: { raised: bigint; goal: bigint }) {
   const pct = goal === 0n ? 0 : Math.min(100, Number((raised * 100n) / goal))

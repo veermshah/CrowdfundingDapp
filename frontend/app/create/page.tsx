@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
@@ -28,9 +28,11 @@ export default function CreatePage() {
 
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash: txHash })
 
-  if (isSuccess) {
-    router.push('/explore')
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      router.replace('/explore')
+    }
+  }, [isSuccess, router])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))

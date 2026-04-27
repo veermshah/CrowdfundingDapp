@@ -48,7 +48,7 @@ export function HeroSection() {
           Fund bold ideas with complete on-chain transparency.
         </h1>
         <p className="max-w-xl text-base leading-7 text-slate-400 sm:text-lg">
-          Raise crypto directly from supporters. Smart contracts enforce every rule — no middlemen, no hidden fees.
+          Raise crypto directly from supporters. Smart contracts enforce every rule — no middlemen.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link

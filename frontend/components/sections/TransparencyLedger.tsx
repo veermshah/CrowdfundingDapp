@@ -29,7 +29,7 @@ export function TransparencyLedger() {
       <article className="glass-panel rounded-3xl p-7 sm:p-8">
         <Pill tone="brand">Smart Contract Rules</Pill>
         <h2 className="mt-4 text-3xl font-semibold text-white">
-          Funds move only when rules are met
+          Funds released only when rules are met
         </h2>
         <p className="mt-4 text-sm leading-7 text-slate-300">
           Campaign contracts enforce milestone-based release logic. This means

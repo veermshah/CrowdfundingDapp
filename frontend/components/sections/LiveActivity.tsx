@@ -137,7 +137,7 @@ export function LiveActivity() {
 
           {!loading && chartData.length === 0 && (
             <div className="flex h-48 items-center justify-center text-sm text-slate-500">
-              No contributions yet — the chart will populate live.
+              No contributions yet — the chart will populate live soon.
             </div>
           )}
 
@@ -204,7 +204,6 @@ export function LiveActivity() {
           {!loading && recent.length > 0 && (
             <ul className="space-y-3">
               {recent.map((entry, i) => {
-                const usd = fmtUsd(entry.amount, ethPrice)
                 return (
                   <li key={i} className="flex items-center justify-between gap-3">
                     <div className="min-w-0">

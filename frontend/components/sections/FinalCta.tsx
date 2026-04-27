@@ -14,7 +14,7 @@ export function FinalCta() {
         <div>
           <Pill tone="accent">Get Started</Pill>
           <h2 className="mt-4 text-3xl font-semibold leading-tight text-white sm:text-4xl">
-            Ready to fund something real?
+            Ready to fund?
           </h2>
           <p className="mt-3 text-sm text-slate-400">
             Every transaction is public. Every rule is enforced by code.

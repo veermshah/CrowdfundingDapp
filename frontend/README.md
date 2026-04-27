@@ -2,7 +2,7 @@
 
 Frontend for a decentralized crowdfunding app built with Next.js + React + Tailwind CSS.
 
-The UI focuses on a transparent Web3 fundraising flow where campaign creation, contribution, and milestone fund release are intended to be enforced by Solidity smart contracts from the Hardhat workspace.
+The UI focuses on a transparent Web fundraising flow where campaign creation, contribution, and milestone fund release are intended to be enforced by Solidity smart contracts from the Hardhat workspace.
 
 ## Tech Stack
 
@@ -33,10 +33,10 @@ components/
 		FinalCta.tsx
 	ui/
 		Pill.tsx
-data/
-	campaigns.ts               # temporary mock data for campaigns + live activity
-types/
-	campaign.ts                # shared campaign-related TypeScript types
+lib/
+	contract.ts                # Crowdfunding ABI + contract address helpers
+	format.ts                  # ETH / USD formatting helpers
+	useEthPrice.ts             # live ETH price lookup for UI display
 ```
 
 ## Getting Started
@@ -47,13 +47,22 @@ types/
 npm install
 ```
 
-2. Start local development:
+2. Copy the env template and set the contract address plus RPC URL:
+
+```bash
+cp .env.example .env.local
+```
+
+Fill in `NEXT_PUBLIC_CROWDFUNDING_ADDRESS` with the deployed contract address.
+
+
+3. Start local development:
 
 ```bash
 npm run dev
 ```
 
-3. Open:
+4. Open:
 
 ```text
 http://localhost:3000
@@ -66,23 +75,12 @@ http://localhost:3000
 - npm run start: Start production server from built output
 - npm run lint: Run ESLint checks
 
-## Current Status
 
-- The UI and layout system are implemented and responsive.
-- Most action buttons are currently presentational.
-- Data currently comes from local mock data in data/campaigns.ts.
+## Full DApp Flow
 
-## Next Implementation Steps
-
-1. Build Solidity crowdfunding contracts in ../hardhat and finalize events + storage layout.
-2. Deploy contracts to local/dev network and export ABI + deployed address.
-3. Add wallet integration in frontend (MetaMask connect/disconnect, chain checks).
-4. Replace mock campaign data with on-chain reads.
-5. Wire contribution and campaign creation actions to contract writes.
-6. Add transaction UX states (pending, success, error) and explorer links.
-
-## Environment Variables
-
-Use an env file for frontend runtime configuration:
-
-- .env.example (committed template)
+1. Install MetaMask in your browser.
+2. Create a new wallet or import an existing one.
+3. Make sure the wallet is on the same network as the deployed contract.
+4. Open the app and click `Connect Wallet` in the navbar.
+5. Pick the MetaMask account you want to use.
+6. Create campaigns, contribute ETH, withdraw funds as the creator, or claim refunds after expiration.

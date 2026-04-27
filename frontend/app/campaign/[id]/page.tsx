@@ -95,7 +95,7 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
       })
       .catch(() => setDonors(new Map()))
       .finally(() => setDonorsLoading(false))
-  }, [publicClient, campaignId.toString()])
+  }, [publicClient, campaignId])
 
   // Merge live events into donors map in real time
   useWatchContractEvent({
