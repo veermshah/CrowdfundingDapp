@@ -48,7 +48,8 @@ export default function CreatePage() {
 
     const hours = parseFloat(form.durationHours)
     if (isNaN(hours) || hours <= 0) { setFormError('Duration must be greater than 0.'); return }
-    const durationSeconds = BigInt(Math.round(hours * 3600))
+    // use a decimal string for seconds to avoid BigInt/serialization issues with different wallets/providers
+    const durationSeconds = String(Math.round(hours * 3600))
 
     writeContract({
       address: CROWDFUNDING_ADDRESS,
@@ -59,7 +60,8 @@ export default function CreatePage() {
         form.description,
         form.category,
         parseEther(form.goalEth),
-        durationSeconds,
+        // cast to satisfy wagmi/TypeScript typing while passing a decimal string at runtime
+        durationSeconds as unknown as bigint,
       ],
     })
   }

@@ -3,9 +3,8 @@
 import Link from 'next/link'
 import { useReadContract, useReadContracts } from 'wagmi'
 import { CROWDFUNDING_ABI, CROWDFUNDING_ADDRESS } from '@/lib/contract'
-import { fmtEth } from '@/lib/format'
+import { fmtEth, fmtUsd } from '@/lib/format'
 import { useEthPrice } from '@/lib/useEthPrice'
-import { EthAmount } from '@/components/ui/EthAmount'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
@@ -130,11 +129,25 @@ export default function ExplorePage() {
                     <p className="mt-1 line-clamp-2 text-sm text-slate-400">{campaign.description}</p>
                   </div>
 
-                  <div className="mt-auto space-y-2">
+                  <div className="mt-auto space-y-3">
+                    <div className="rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Goal target</p>
+                      <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                        <span className="text-2xl font-semibold text-white">{fmtEth(campaign.goalAmount)} ETH</span>
+                        {fmtUsd(campaign.goalAmount, ethPrice) && (
+                          <span className="text-sm text-emerald-400">{fmtUsd(campaign.goalAmount, ethPrice)}</span>
+                        )}
+                      </div>
+                    </div>
                     <ProgressBar raised={campaign.raised} goal={campaign.goalAmount} />
                     <div className="flex items-center justify-between text-sm">
-                      <EthAmount wei={campaign.raised} ethPrice={ethPrice} className="font-semibold text-cyan-300" usdClassName="text-emerald-400 font-semibold" />
-                      <span className="text-slate-400">of <EthAmount wei={campaign.goalAmount} ethPrice={ethPrice} className="text-slate-400" usdClassName="text-slate-300" /> • {pct}%</span>
+                      <span className="font-semibold text-cyan-300">
+                        Raised {fmtEth(campaign.raised)} ETH
+                        {fmtUsd(campaign.raised, ethPrice) && (
+                          <span className="ml-2 text-emerald-400">{fmtUsd(campaign.raised, ethPrice)}</span>
+                        )}
+                      </span>
+                      <span className="text-slate-400">{pct}% funded</span>
                     </div>
                     <div className="flex items-center justify-between text-xs text-slate-500">
                       <span>{Number(campaign.backerCount)} backer{campaign.backerCount !== 1n ? 's' : ''}</span>

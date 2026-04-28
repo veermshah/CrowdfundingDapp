@@ -56,6 +56,10 @@ const CONTRIBUTED_EVENT = parseAbiItem(
   'event Contributed(uint256 indexed campaignId, address indexed contributor, uint256 amount)'
 )
 
+const REFUNDED_EVENT = parseAbiItem(
+  'event Refunded(uint256 indexed campaignId, address indexed contributor, uint256 amount)'
+)
+
 export default function CampaignPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const campaignId = BigInt(id)
@@ -71,30 +75,54 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
   // Map of address -> total contributed (wei)
   const [donors, setDonors] = useState<Map<string, bigint>>(new Map())
   const [donorsLoading, setDonorsLoading] = useState(true)
+  const [refunds, setRefunds] = useState<Map<string, bigint>>(new Map())
+  const [refundsLoading, setRefundsLoading] = useState(true)
 
   // Fetch all historical Contributed logs for this campaign
   useEffect(() => {
     if (!publicClient) return
     setDonorsLoading(true)
+    setRefundsLoading(true)
 
-    publicClient
-      .getLogs({
+    Promise.all([
+      publicClient.getLogs({
         address: CROWDFUNDING_ADDRESS,
         event: CONTRIBUTED_EVENT,
         args: { campaignId },
         fromBlock: 0n,
         toBlock: 'latest',
-      })
-      .then((logs) => {
-        const map = new Map<string, bigint>()
-        for (const log of logs) {
+      }),
+      publicClient.getLogs({
+        address: CROWDFUNDING_ADDRESS,
+        event: REFUNDED_EVENT,
+        args: { campaignId },
+        fromBlock: 0n,
+        toBlock: 'latest',
+      }),
+    ])
+      .then(([contribLogs, refundLogs]) => {
+        const contribMap = new Map<string, bigint>()
+        for (const log of contribLogs) {
           const addr = getAddress(log.args.contributor!)
-          map.set(addr, (map.get(addr) ?? 0n) + log.args.amount!)
+          contribMap.set(addr, (contribMap.get(addr) ?? 0n) + log.args.amount!)
         }
-        setDonors(map)
+        setDonors(contribMap)
+
+        const refundMap = new Map<string, bigint>()
+        for (const r of refundLogs) {
+          const addr = getAddress(r.args.contributor!)
+          refundMap.set(addr, (refundMap.get(addr) ?? 0n) + r.args.amount!)
+        }
+        setRefunds(refundMap)
       })
-      .catch(() => setDonors(new Map()))
-      .finally(() => setDonorsLoading(false))
+      .catch(() => {
+        setDonors(new Map())
+        setRefunds(new Map())
+      })
+      .finally(() => {
+        setDonorsLoading(false)
+        setRefundsLoading(false)
+      })
   }, [publicClient, campaignId.toString()])
 
   // Merge live events into donors map in real time
@@ -206,6 +234,7 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
 
   // Sort donors by amount descending
   const donorList = [...donors.entries()].sort((a, b) => (b[1] > a[1] ? 1 : -1))
+  const refundList = [...refunds.entries()].sort((a, b) => (b[1] > a[1] ? 1 : -1))
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -361,6 +390,48 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
                 )
               })}
             </div>
+
+            {!isActive && (
+              <div className="border-t border-white/10">
+                <div className="border-b border-white/10 px-6 py-4">
+                  <h2 className="font-semibold text-white">Refunds claimed</h2>
+                  <p className="mt-0.5 text-xs text-slate-500">
+                    {refundsLoading ? 'Loading…' : `${refundList.length} wallet${refundList.length !== 1 ? 's' : ''} claimed refunds`}
+                  </p>
+                </div>
+
+                <div className="divide-y divide-white/5 max-h-[320px] overflow-y-auto">
+                  {refundsLoading && (
+                    <div className="space-y-3 p-6">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="h-8 animate-pulse rounded-lg bg-slate-800/60" />
+                      ))}
+                    </div>
+                  )}
+
+                  {!refundsLoading && refundList.length === 0 && (
+                    <p className="px-6 py-8 text-center text-sm text-slate-500">No refunds claimed yet.</p>
+                  )}
+
+                  {!refundsLoading && refundList.map(([addr, total]) => {
+                    const usd = fmtUsd(total, ethPrice)
+                    return (
+                      <div key={addr} className="flex items-center justify-between gap-3 px-6 py-3">
+                        <div className="min-w-0">
+                          <p className="truncate font-mono text-xs text-slate-300">
+                            {addr.slice(0, 8)}…{addr.slice(-6)}
+                          </p>
+                        </div>
+                        <div className="shrink-0 text-right">
+                          <p className="text-sm font-semibold text-yellow-300">{fmtEth(total)} ETH</p>
+                          {usd && <p className="text-xs text-slate-500">{usd}</p>}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
         </div>

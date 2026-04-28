@@ -1,7 +1,16 @@
 import { defineChain } from 'viem'
 
+const DEFAULT_CROWDFUNDING_ADDRESS = '0xe0B93a16313F71B77A73de546557F6483e20B408'
+const LEGACY_CROWDFUNDING_ADDRESS = '0xBCc7B75E058B25E7666315eAc27329B6c740e8ce'
+
+const configuredCrowdfundingAddress = process.env.NEXT_PUBLIC_CROWDFUNDING_ADDRESS
+
 export const CROWDFUNDING_ADDRESS = (
-  process.env.NEXT_PUBLIC_CROWDFUNDING_ADDRESS ?? '0x0000000000000000000000000000000000000000'
+  configuredCrowdfundingAddress &&
+  configuredCrowdfundingAddress !== '0x0000000000000000000000000000000000000000' &&
+  configuredCrowdfundingAddress.toLowerCase() !== LEGACY_CROWDFUNDING_ADDRESS.toLowerCase()
+    ? configuredCrowdfundingAddress
+    : DEFAULT_CROWDFUNDING_ADDRESS
 ) as `0x${string}`
 
 export const hardhatLocal = defineChain({

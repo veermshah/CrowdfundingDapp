@@ -26,10 +26,13 @@ export function EthAmount({
 
   return (
     <span
-      className={`relative inline-block h-[1.25em] overflow-hidden align-middle cursor-default ${className}`}
+      className={`relative inline-flex h-[1.25em] min-w-max overflow-hidden align-middle cursor-default ${className}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      <span aria-hidden="true" className="invisible whitespace-nowrap">
+        {eth}
+      </span>
       <span
         className={`absolute inset-0 flex items-center transition-transform duration-300 ease-in-out ${
           hovered ? '-translate-y-full' : 'translate-y-0'
