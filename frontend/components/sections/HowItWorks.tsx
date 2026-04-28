@@ -2,50 +2,49 @@ import { Pill } from "../ui/Pill";
 
 const steps = [
   {
-    title: "1. Creator Launches Campaign",
-    description:
-      "Project details, funding goal, and milestone conditions are stored in a Solidity smart contract.",
+    step: "01",
+    title: "Create a Campaign",
+    description: "Set a title, goal amount, and deadline. Everything is stored on-chain.",
   },
   {
-    title: "2. Donors Contribute via MetaMask",
-    description:
-      "Contributors send ETH directly from their wallets and instantly see transactions on-chain.",
+    step: "02",
+    title: "Contributors Send ETH",
+    description: "Anyone with a wallet can contribute directly — no accounts, no fees.",
   },
   {
-    title: "3. Milestones Are Publicly Verified",
-    description:
-      "Funds remain governed by contract logic and are released only after milestone requirements are met.",
+    step: "03",
+    title: "Goal Met → Creator Withdraws",
+    description: "Once the goal is reached, the creator can withdraw funds to their wallet.",
   },
   {
-    title: "4. Everyone Audits Progress",
-    description:
-      "Campaign pages display transparent fund flow, progress bars, and the complete transaction ledger.",
+    step: "04",
+    title: "Goal Missed → Refunds Available",
+    description: "If the deadline passes without reaching the goal, contributors get their ETH back.",
   },
 ];
 
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="space-y-6">
-      <div className="space-y-3">
+      <div className="space-y-2">
         <Pill tone="accent">How It Works</Pill>
         <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-          A trust-minimized crowdfunding lifecycle
+          Simple. Transparent. Trustless.
         </h2>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         {steps.map((step, index) => (
           <article
-            key={step.title}
-            className="glass-panel animate-reveal flex h-full flex-col rounded-2xl p-6"
-            style={{ animationDelay: `${index * 100}ms` }}
+            key={step.step}
+            className="glass-panel animate-reveal flex gap-5 rounded-2xl p-6"
+            style={{ animationDelay: `${index * 80}ms` }}
           >
-            <h3 className="text-xl font-semibold text-white">
-              {step.title}
-            </h3>
-            <p className="mt-3 flex-1 text-sm leading-7 text-slate-300">
-              {step.description}
-            </p>
+            <span className="mt-0.5 text-2xl font-bold text-slate-700">{step.step}</span>
+            <div>
+              <h3 className="font-semibold text-white">{step.title}</h3>
+              <p className="mt-1.5 text-sm leading-6 text-slate-400">{step.description}</p>
+            </div>
           </article>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Sora } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -28,7 +29,9 @@ export default function RootLayout({
       lang="en"
       className={`${dmSans.variable} ${sora.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full font-sans text-slate-100">{children}</body>
+      <body className="min-h-full font-sans text-slate-100">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

@@ -1,12 +1,8 @@
 import { Footer } from "../components/layout/Footer";
 import { Navbar } from "../components/layout/Navbar";
 import { CampaignGrid } from "../components/sections/CampaignGrid";
-import { FinalCta } from "../components/sections/FinalCta";
 import { HeroSection } from "../components/sections/HeroSection";
-import { HowItWorks } from "../components/sections/HowItWorks";
-import { LiveActivity } from "../components/sections/LiveActivity";
 import { StatsStrip } from "../components/sections/StatsStrip";
-import { TransparencyLedger } from "../components/sections/TransparencyLedger";
 
 export default function Home() {
   return (
@@ -16,10 +12,6 @@ export default function Home() {
         <HeroSection />
         <StatsStrip />
         <CampaignGrid />
-        <HowItWorks />
-        <TransparencyLedger />
-        <LiveActivity />
-        <FinalCta />
       </main>
       <Footer />
     </div>
