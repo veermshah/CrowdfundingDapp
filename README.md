@@ -1,5 +1,9 @@
 # ChainFunded
 
+Created by:
+Veer Shah, VMS220003
+Casey Nguyen, CXN220034 
+
 Decentralized crowdfunding dapp with a Next.js frontend and a Solidity smart contract built with Hardhat.
 
 Live demo: https://chainfunded.vercel.app/
