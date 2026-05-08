@@ -102,6 +102,8 @@ npx hardhat ignition deploy ignition/modules/CrowdfundingV2.ts
 
 ### Sepolia deployment
 
+This will only work if you have configured SEPOLIA_RPC_URL and SEPOLIA_PRIVATE_KEY in your environment variables.
+
 ```bash
 cd hardhat
 npx hardhat ignition deploy --network sepolia ignition/modules/CrowdfundingV2.ts
@@ -110,4 +112,16 @@ npx hardhat ignition deploy --network sepolia ignition/modules/CrowdfundingV2.ts
 ## Notes
 
 - The frontend can run against local or Sepolia RPC endpoints depending on your .env.local settings.
+- For the live demo, connect your wallet to Sepolia and fund it with test ETH from a faucet like https://cloud.google.com/application/web3/faucet/ethereum/sepolia.
+- To use a locally deployed contract:
+	- Start a local chain: `cd hardhat` then `npx hardhat node`.
+	- Add the Hardhat network to your wallet (RPC: http://127.0.0.1:8545, Chain ID: 31337).
+	- In a second terminal, deploy to localhost: `npx hardhat ignition deploy ignition/modules/CrowdfundingV2.ts --network localhost`.
+	- Copy the contract address from the deploy output, or from `hardhat/ignition/deployments/chain-31337/deployed_addresses.json` after the deploy finishes.
+	- Set these in .env.local:
+		- NEXT_PUBLIC_CHAIN_ID=31337
+		- NEXT_PUBLIC_RPC_URL=http://127.0.0.1:8545
+		- NEXT_PUBLIC_CROWDFUNDING_ADDRESS=<local deployment address>
+	- Start the frontend: `cd frontend` then `npm run dev`.
+	- Open http://localhost:3000 and create a test campaign or contribution to confirm the UI is using the local contract.
 - If PowerShell blocks npm.ps1 on Windows, run commands via cmd.exe or allow scripts for the current user.

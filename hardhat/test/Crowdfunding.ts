@@ -16,6 +16,8 @@ describe("Crowdfunding", async function () {
     return viem.deployContract("Crowdfunding");
   }
 
+  const daySeconds = 24n * 60n * 60n;
+
   async function deployWithCampaign(durationDays = 30n) {
     const cf = await deploy();
     await cf.write.createCampaign([
@@ -23,7 +25,7 @@ describe("Crowdfunding", async function () {
       "Community solar initiative",
       "Environment",
       parseEther("10"),
-      durationDays,
+      durationDays * daySeconds,
     ]);
     return cf;
   }
