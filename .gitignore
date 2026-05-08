@@ -1,0 +1,20 @@
+# Hardhat node_modules
+/hardhat/node_modules
+
+# Hardhat compilation output
+/hardhat/dist
+
+# Hardhat pnpm deploy output
+/hardhat/bundle
+
+# Hardhat build artifacts
+/hardhat/artifacts
+
+# Hardhat compilation (v2) support directory
+/hardhat/cache
+
+# Hardhat typechain output
+/hardhat/types
+
+# Hardhat coverage reports
+/hardhat/coverage

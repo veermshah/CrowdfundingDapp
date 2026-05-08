@@ -1,7 +1,7 @@
 import { defineChain } from 'viem'
 
 const DEFAULT_CROWDFUNDING_ADDRESS = '0xe0B93a16313F71B77A73de546557F6483e20B408'
-const LEGACY_CROWDFUNDING_ADDRESS = '0xBCc7B75E058B25E7666315eAc27329B6c740e8ce'
+const LEGACY_CROWDFUNDING_ADDRESS = '0xBCc7B75E058B25E7666315eAc27329B6c740e8ce' // This was the original address used during development, but it was used to deploy a different, older contract. We keep it here just in case we need to reference the old deployment for any reason.
 
 const configuredCrowdfundingAddress = process.env.NEXT_PUBLIC_CROWDFUNDING_ADDRESS
 

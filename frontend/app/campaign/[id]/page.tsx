@@ -72,13 +72,11 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
   const [ethInput, setEthInput] = useState('')
   const [inputError, setInputError] = useState('')
 
-  // Map of address -> total contributed (wei)
   const [donors, setDonors] = useState<Map<string, bigint>>(new Map())
   const [donorsLoading, setDonorsLoading] = useState(true)
   const [refunds, setRefunds] = useState<Map<string, bigint>>(new Map())
   const [refundsLoading, setRefundsLoading] = useState(true)
 
-  // Fetch all historical Contributed logs for this campaign
   useEffect(() => {
     if (!publicClient) return
     setDonorsLoading(true)
@@ -125,7 +123,6 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
       })
   }, [publicClient, campaignId.toString()])
 
-  // Merge live events into donors map in real time
   useWatchContractEvent({
     address: CROWDFUNDING_ADDRESS,
     abi: CROWDFUNDING_ABI,
